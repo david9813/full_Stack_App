@@ -1,20 +1,23 @@
+require('dotenv').config();
 const express = require('express');
-const mysql = require('mysql');
+const mysql = require('mysql2');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 
 const app = express();
-const port = 5000;
+const port = process.env.PORT || 5000;
 
 app.use(cors());
 app.use(bodyParser.json());
 
-// Create MySQL connection
+// Create MySQL connection using environment variables
+
+
 const db = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: '',
-    database: 'userdb'
+    host: 'sql.freedb.tech',
+    user: 'freedb_David',
+    password: '8VT*pswU*8yHBwg',
+    database: 'freedb_studentmanagment'
 });
 
 db.connect(err => {
@@ -25,7 +28,7 @@ db.connect(err => {
     console.log('Connected to MySQL database');
 });
 
-// Handle POST request to save user data ......post my sql
+// Handle POST request to save user data
 app.post('/api/users', (req, res) => {
     const { id, name, email, age, gender } = req.body;
     const query = 'INSERT INTO users (id, name, email, age, gender) VALUES (?, ?, ?, ?, ?)';
@@ -40,49 +43,47 @@ app.post('/api/users', (req, res) => {
     });
 });
 
-
 // Endpoint to get all users
 app.get('/api/users', (req, res) => {
-  const query = 'SELECT * FROM users';
-  db.query(query, (err, results) => {
-      if (err) {
-          console.error('Error fetching data:', err);
-          res.status(500).send('Error fetching user data');
-          return;
-      }
-      res.status(200).json(results);
-  });
+    const query = 'SELECT * FROM users';
+    db.query(query, (err, results) => {
+        if (err) {
+            console.error('Error fetching data:', err);
+            res.status(500).send('Error fetching user data');
+            return;
+        }
+        res.status(200).json(results);
+    });
 });
 
+// Delete user
 app.delete('/api/users/:id', (req, res) => {
-  const { id } = req.params;
-  const query = 'DELETE FROM users WHERE id = ?';
-  db.query(query, [id], (err, result) => {
-      if (err) {
-          console.error('Error deleting data:', err);
-          res.status(500).send('Error deleting user data');
-          return;
-      }
-      res.status(200).send('User data deleted successfully');
-  });
+    const { id } = req.params;
+    const query = 'DELETE FROM users WHERE id = ?';
+    db.query(query, [id], (err, result) => {
+        if (err) {
+            console.error('Error deleting data:', err);
+            res.status(500).send('Error deleting user data');
+            return;
+        }
+        res.status(200).send('User data deleted successfully');
+    });
 });
 
-// edit
+// Edit user
 app.put('/api/users/:id', (req, res) => {
-  const { id } = req.params;
-  const { name, email, age, gender } = req.body;
-  const query = 'UPDATE users SET name = ?, email = ?, age = ?, gender = ? WHERE id = ?';
-  db.query(query, [name, email, age, gender, id], (err, result) => {
-      if (err) {
-          console.error('Error updating data:', err);
-          res.status(500).send('Error updating user data');
-          return;
-      }
-      res.status(200).send('User data updated successfully');
-  });
+    const { id } = req.params;
+    const { name, email, age, gender } = req.body;
+    const query = 'UPDATE users SET name = ?, email = ?, age = ?, gender = ? WHERE id = ?';
+    db.query(query, [name, email, age, gender, id], (err, result) => {
+        if (err) {
+            console.error('Error updating data:', err);
+            res.status(500).send('Error updating user data');
+            return;
+        }
+        res.status(200).send('User data updated successfully');
+    });
 });
-
-
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);

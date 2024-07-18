@@ -7,7 +7,7 @@ const UserTable = () => {
 
   // Function to fetch users from backend
   const fetchUsers = () => {
-    axios.get('http://localhost:5000/api/users')
+    axios.get('https://studentmanagement2-c661d76ae278.herokuapp.com/api/users')
       .then(response => {
         setUsers(response.data);
       })
@@ -23,7 +23,7 @@ const UserTable = () => {
 
   // Function to handle delete
   const handleDelete = (id) => {
-    axios.delete(`http://localhost:5000/api/users/${id}`)
+    axios.delete(`https://studentmanagement2-c661d76ae278.herokuapp.com/api/users/${id}`)
       .then(response => {
         console.log(response.data);
         fetchUsers(); // Refresh the list after deletion

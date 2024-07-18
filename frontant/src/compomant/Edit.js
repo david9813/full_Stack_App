@@ -13,7 +13,7 @@ const Edit = () => {
   });
 
   useEffect(() => {
-    axios.get(`http://localhost:5000/api/users/${id}`)
+    axios.get(`https://studentmanagement2-c661d76ae278.herokuapp.com/api/users/${id}`)
       .then(response => {
         setFormData(response.data);
       })
@@ -32,7 +32,7 @@ const Edit = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.put(`http://localhost:5000/api/users/${id}`, formData)
+    axios.put(`https://studentmanagement2-c661d76ae278.herokuapp.com/api/users/${id}`, formData)
       .then(response => {
         console.log('User data updated:', response.data);
         navigate('/');

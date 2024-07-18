@@ -9,7 +9,7 @@ const Read = () => {
 
   useEffect(() => {
     // Fetch all users initially to find the user by id
-    axios.get(`http://localhost:5000/api/users`)
+    axios.get(`https://studentmanagement2-c661d76ae278.herokuapp.com/api/users`)
       .then(response => {
         // Find the user with matching id
         const foundUser = response.data.find(user => user.id === parseInt(id));

@@ -14,8 +14,8 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start-frontant": "react-scripts start",
-    "build": "react-scripts build && (cd ../backend && npm install)",  // Fixed closing parenthesis
+    "start": "react-scripts start",
+    "build": "react-scripts build ",  
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
